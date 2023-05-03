@@ -4,7 +4,7 @@ public class TestVector
 {
     public static void main(String[] args)
     {
-        System.out.println("Testig vector");
+        System.out.println("Testing vector");
         
         Vector v = new Vector(2,3);
         System.out.println(v); // < 2 , 3 >
