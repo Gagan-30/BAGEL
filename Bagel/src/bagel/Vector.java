@@ -15,7 +15,7 @@ public class Vector
         setValues(x,y);
     }
     
-    private void setValues(double x, double y)
+    void setValues(double x, double y)
     {
         this.x = x;
         this.y = y;

@@ -24,6 +24,6 @@ public class Texture
        double height = tex.image.getHeight();
        tex.region.setValues(0, 0, width, height);
        
-       return null;
+       return tex;
    }
 }

@@ -15,7 +15,9 @@ public abstract class Game extends Application implements Screen
     public GraphicsContext context;
     public Group group;
     public Stage stage;
+    public Input input;
     
+    @Override
     public void start(Stage primaryStage)
     {
         primaryStage.setTitle("Game");
@@ -32,6 +34,8 @@ public abstract class Game extends Application implements Screen
         
         group = new Group();
         
+        input = new Input(primaryScene);
+        
         //class containing update nethod
         Game self = this;     
         AnimationTimer gameloop = new AnimationTimer()
@@ -39,6 +43,7 @@ public abstract class Game extends Application implements Screen
             @Override
             public void handle(long nanotime) 
             {
+                input.update();
                 //update game state
                 self.update();
                 

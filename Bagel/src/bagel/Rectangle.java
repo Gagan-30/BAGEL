@@ -2,10 +2,10 @@ package bagel;
 
 public class Rectangle 
 {
-    private double left;
-    private double top;
-    private double width;
-    private double height;
+    double left;
+    double top;
+    double width;
+    double height;
     private double right;
     private double bottom;
     
