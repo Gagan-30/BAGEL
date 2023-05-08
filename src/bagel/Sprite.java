@@ -5,15 +5,10 @@ import javafx.scene.canvas.GraphicsContext;
 public class Sprite extends Entity 
 {
     public Vector position;
-    
     public Rectangle boundary;
-    
     public Texture texture;
-    
     public double width;
-    
     public double height;
-    
     public boolean visible;
 
     public Sprite()
@@ -56,6 +51,18 @@ public class Sprite extends Entity
         return this.getBoundary().overLaps(other.getBoundary());
     }
     
+    public void boundToScreen(int screenWidth, int screenHeight)
+    {
+        if(position.x < 0)
+            position.x = 0;
+        if(position.y < 0)
+            position.y = 0;
+        if(position.x + width > screenWidth)
+            position.x = screenWidth - width;
+        if(position.y + height > screenHeight)
+            position.y = screenHeight - height;
+    }
+    
     @Override
     public void draw(GraphicsContext context) 
     {
@@ -71,6 +78,5 @@ public class Sprite extends Entity
                0, 0,
                this.width, this.height);
     }
-    
     
 }

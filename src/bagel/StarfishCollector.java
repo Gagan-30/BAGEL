@@ -79,9 +79,9 @@ public class StarfishCollector extends Game
         }
         
         if (starfishGroup.size() == 0) 
-        {
             win.visible = true;
-        }
+        
+        turtle.boundToScreen(800, 600);
     }
     
     public static void main(String[] args)
