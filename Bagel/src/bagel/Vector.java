@@ -1,6 +1,6 @@
 package bagel;
 
-public class Vector 
+public class Vector implements Comparable<Vector>
 {
     public double x;
     public double y;
@@ -48,9 +48,13 @@ public class Vector
     public double getAngle()
     {
          if (this.getLength() == 0)
-            return 0;
-        else
-            return Math.toDegrees( Math.atan2(this.y, this.x) );
+         {
+             return 0;
+         }
+         else
+         {
+             return Math.toDegrees( Math.atan2(this.y, this.x) );
+         }
     }
     
     public void setLength(double length)
@@ -73,5 +77,22 @@ public class Vector
     public String toString()
     {
         return "< " + this.x + " , " + this.y + " >";
+    }
+
+    @Override
+    public int compareTo(Vector other) 
+    {
+        if(this.getLength() < other.getLength())
+        {
+            return -1;
+        } 
+        else if(this.getLength() > other.getLength())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }  
     }
 }

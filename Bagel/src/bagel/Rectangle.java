@@ -1,5 +1,7 @@
 package bagel;
 
+import java.util.Arrays;
+
 public class Rectangle 
 {
     double left;
@@ -36,6 +38,11 @@ public class Rectangle
         setValues(left, top, this.width, this.height);
     }
     
+    public void setSize(double width, double height)
+    {
+        setValues(this.left, this.top, width, height);
+    }
+    
     public boolean overLaps(Rectangle other)
     {
         boolean noOverlap = (other.right < this.left)
@@ -44,5 +51,20 @@ public class Rectangle
                 || (this.bottom < other.top);
         
         return !noOverlap;
+    }
+    
+    public Vector getMinimumTranslationVector(Rectangle other)
+    {
+        Vector[] differences =
+        {
+            new Vector(other.right - this.left, 0),
+            new Vector(other.left - this.right, 0),
+            new Vector(0, other.bottom - this.top),
+            new Vector(0, other.top - this.bottom)
+        };
+        
+        Arrays.sort(differences);
+        
+        return differences[0];
     }
 }

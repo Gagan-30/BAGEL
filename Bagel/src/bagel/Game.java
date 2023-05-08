@@ -71,9 +71,8 @@ public abstract class Game extends Application implements Screen
         
         public void setWindowSize(int width, int height)
         {
-            stage.setWidth(width);
-            stage.setHeight(height);
             canvas.setWidth(width);
             canvas.setHeight(height);
+            stage.sizeToScene();
         }
 }
