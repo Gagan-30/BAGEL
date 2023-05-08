@@ -7,6 +7,7 @@ public class StarfishCollector extends Game
     Group starfishGroup;
     Sprite turtle;
     Sprite win;
+    Group rockGroup;
     
     @Override
     public void initialize()
@@ -16,8 +17,23 @@ public class StarfishCollector extends Game
        
        water = new Sprite();
        water.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/water.png"));
+       water.setPosition(400, 300);
        group.add(water);
        
+       rockGroup = new Group();
+       Texture rockTexture = new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/rock.png");
+       int rockCount = 3;
+        for (int i = 0; i < rockCount; i++) 
+        {
+            Sprite rock = new Sprite();
+            double x = Math.random() * 600 + 100;
+            double y = Math.random() * 450 + 100;
+            rock.setPosition(x, y);
+            rock.setTexture(rockTexture);
+            rockGroup.add(rock);
+        }
+        group.add(rockGroup);
+        
        starfishGroup = new Group();
        Texture starfishTexture = new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/starfish.png");
        int starfishCount = 20;
@@ -28,6 +44,25 @@ public class StarfishCollector extends Game
             double y = Math.random() * 450 + 100;
             starfish.setPosition(x, y);
             starfish.setTexture(starfishTexture);
+            
+            boolean rockOverlap = false;
+            do 
+            {  
+                rockOverlap = false;
+                x = Math.random() * 600 + 100;
+                y = Math.random() * 450 + 100;
+                starfish.setPosition(x, y);
+                for(Entity entity : rockGroup.getList())
+                {
+                    Sprite rock = (Sprite) entity;
+                    if(rock.overlaps(starfish))
+                    {
+                        rockOverlap = true;
+                    }
+                }
+            } 
+            while (rockOverlap);
+            
             starfishGroup.add(starfish);
         }
         group.add(starfishGroup);
@@ -38,7 +73,7 @@ public class StarfishCollector extends Game
         group.add(turtle);
         
         win = new Sprite();
-        win.setPosition(250,200);
+        win.setPosition(400,300);
         win.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/youWin.png"));
         win.visible = false;
         group.add(win);
@@ -54,21 +89,25 @@ public class StarfishCollector extends Game
         }
         if (input.isKeyPressed("RIGHT")) 
         {
-            turtle.position.addValues(2, 0);
+            turtle.moveBy(2, 0);
+            turtle.setAngle(0);
         }
         if (input.isKeyPressed("LEFT")) 
         {
-            turtle.position.addValues(-2, 0);
+            turtle.moveBy(-2, 0);
+            turtle.setAngle(180);
         }
         if (input.isKeyPressed("UP")) 
         {
-            turtle.position.addValues(0, -2);
+            turtle.moveBy(0, -2);
+            turtle.setAngle(270);
         }
         if (input.isKeyPressed("DOWN")) 
         {
-            turtle.position.addValues(0, 2);
+            turtle.moveBy(0, 2);
+            turtle.setAngle(90);
         }
-        
+
         for(Entity entity : starfishGroup.getList())
         {
             Sprite starfish = (Sprite)entity;
@@ -78,9 +117,17 @@ public class StarfishCollector extends Game
             }
         }
         
-        if (starfishGroup.size() == 0) 
-            win.visible = true;
+        for(Entity entity : rockGroup.getList())
+        {
+            Sprite rock = (Sprite)entity;
+            turtle.preventOverlap(rock); //switch turtle and rock to push rocks
+        }
         
+        if (starfishGroup.size() == 0) 
+        {
+            win.visible = true;
+        }
+
         turtle.boundToScreen(800, 600);
     }
     
