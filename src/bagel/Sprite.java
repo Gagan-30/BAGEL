@@ -13,6 +13,7 @@ public class Sprite extends Entity
     public boolean visible;
     public boolean mirrored; //x direction
     public boolean flipped; //y direction
+    public double opacity;
 
     public Sprite()
     {
@@ -23,6 +24,7 @@ public class Sprite extends Entity
         visible = true;
         mirrored = false;
         flipped = false;
+        opacity = 1;
     }
     
     public void setPosition(double x, double y)
@@ -122,6 +124,7 @@ public class Sprite extends Entity
         {
             scaleX = -1;
         }
+        
         double scaleY = 1;
         if(flipped)
         {
@@ -132,6 +135,8 @@ public class Sprite extends Entity
                 scaleX * cosA, scaleX * sinA,
                 scaleY * (-sinA), scaleY * cosA, 
                 position.x, position.y);
+        
+        context.setGlobalAlpha(opacity);
         
        context.drawImage(texture.image,
                texture.region.left, texture.region.top,

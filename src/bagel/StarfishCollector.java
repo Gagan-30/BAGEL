@@ -4,6 +4,7 @@ public class StarfishCollector extends Game
 {
 
     Sprite water;
+    Sprite water2;
     Group starfishGroup;
     Sprite turtle;
     Sprite win;
@@ -20,7 +21,7 @@ public class StarfishCollector extends Game
        water.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/water.png"));
        water.setPosition(400, 300);
        group.add(water);
-       
+
        rockGroup = new Group();
        Texture rockTexture = new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/rock.png");
        int rockCount = 3;
@@ -78,7 +79,12 @@ public class StarfishCollector extends Game
         shark.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/shark.png"));
         group.add(shark);
         
-        
+        water2 = new Sprite();
+        water2.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/water.png"));
+        water2.setPosition(400, 300);
+        water2.opacity = 0.25;
+        group.add(water2);
+       
         win = new Sprite();
         win.setPosition(400,300);
         win.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/youWin.png"));
