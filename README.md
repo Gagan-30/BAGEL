@@ -6,4 +6,5 @@ Using the tutorial from https://youtube.com/playlist?list=PLxpdybrffYlNtjVkMbDD5
 
 This project includes the basic game development features:
 
-Game loop, animations, Display output, Vectors, Sprites, Textures, Keyboard inputs, Basic collision detection
+Game loop, animations, Display output, Vectors, Sprites, Textures, Keyboard inputs, Basic collision detection, Sprite reflection, Sprite opacity, Basic physics functions such as:
+Speed, velocity, Acceleration through the use of Vectors and Delta Time
