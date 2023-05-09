@@ -11,6 +11,8 @@ public class Sprite extends Entity
     public double height;
     public double angle; //degrees
     public boolean visible;
+    public boolean mirrored; //x direction
+    public boolean flipped; //y direction
 
     public Sprite()
     {
@@ -19,6 +21,8 @@ public class Sprite extends Entity
         texture = new Texture();
         boundary = new Rectangle();
         visible = true;
+        mirrored = false;
+        flipped = false;
     }
     
     public void setPosition(double x, double y)
@@ -113,7 +117,20 @@ public class Sprite extends Entity
         double cosA = Math.cos(A);
         double sinA = Math.sin(A);
         
-        context.setTransform(cosA,sinA, -sinA,cosA, 
+        double scaleX = 1;
+        if(mirrored)
+        {
+            scaleX = -1;
+        }
+        double scaleY = 1;
+        if(flipped)
+        {
+            scaleY = -1;
+        }
+        
+        context.setTransform(
+                scaleX * cosA, scaleX * sinA,
+                scaleY * (-sinA), scaleY * cosA, 
                 position.x, position.y);
         
        context.drawImage(texture.image,
