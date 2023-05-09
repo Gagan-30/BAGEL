@@ -94,16 +94,16 @@ public class StarfishCollector extends Game
         if (win.visible)
             return;
         
-        if (input.isKeyPressed("RIGHT") || input.isKeyJustPressed("D")) 
+        if (input.isKeyPressed("RIGHT")) 
             turtle.physics.accelerateAtAngle(0);
         
-        if (input.isKeyPressed("LEFT")|| input.isKeyJustPressed("A")) 
+        if (input.isKeyPressed("LEFT")) 
             turtle.physics.accelerateAtAngle(180);
         
-        if (input.isKeyPressed("UP")|| input.isKeyJustPressed("W")) 
+        if (input.isKeyPressed("UP")) 
             turtle.physics.accelerateAtAngle(270);
         
-        if (input.isKeyPressed("DOWN")|| input.isKeyJustPressed("S")) 
+        if (input.isKeyPressed("DOWN")) 
             turtle.physics.accelerateAtAngle(90);
         
         if(turtle.physics.getSpeed() > 0)
