@@ -14,6 +14,8 @@ public class Sprite extends Entity
     public boolean mirrored; //x direction
     public boolean flipped; //y direction
     public double opacity;
+    
+    public Physics physics;
 
     public Sprite()
     {
@@ -25,6 +27,7 @@ public class Sprite extends Entity
         mirrored = false;
         flipped = false;
         opacity = 1;
+        physics = null;
     }
     
     public void setPosition(double x, double y)
@@ -77,6 +80,11 @@ public class Sprite extends Entity
         boundary.setSize(width, height);
     }
     
+    public void setPhysics(Physics phys)
+    {
+        physics = phys;
+    }
+    
     public Rectangle getBoundary()
     {
         boundary.setPosition(position.x, position.y);
@@ -107,6 +115,19 @@ public class Sprite extends Entity
             position.x = screenWidth - width/2; 
         if (position.y + height/2 > screenHeight) 
             position.y = screenHeight - height/2; 
+    }
+    
+    @Override
+    public void update(double dt)
+    {
+        if(physics != null)
+        {
+            physics.position.setValues(
+                    this.position.x, this.position.y);
+            physics.update(dt);
+            this.position.setValues(
+                    physics.position.x, physics.position.y);
+        }
     }
     
     @Override
@@ -144,5 +165,6 @@ public class Sprite extends Entity
                -this.width / 2, -this.height / 2,
                this.width, this.height);
     }
+
     
 }

@@ -41,5 +41,13 @@ public class Group extends Entity
         }
     }
     
+    public void update(double dt)
+    {
+        for(Entity e : this.list)
+        {
+            e.update(dt);
+        }
+    }
+    
     
 }

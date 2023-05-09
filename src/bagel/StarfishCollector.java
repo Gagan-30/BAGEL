@@ -72,18 +72,13 @@ public class StarfishCollector extends Game
         turtle = new Sprite();
         turtle.setPosition(50, 50);
         turtle.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/turtle.png"));
+        turtle.setPhysics(new Physics(600,200,600));
         group.add(turtle);
         
         shark = new Sprite();
         shark.setPosition(400, 300);
         shark.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/shark.png"));
         group.add(shark);
-        
-        water2 = new Sprite();
-        water2.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/water.png"));
-        water2.setPosition(400, 300);
-        water2.opacity = 0.25;
-        group.add(water2);
        
         win = new Sprite();
         win.setPosition(400,300);
@@ -97,38 +92,28 @@ public class StarfishCollector extends Game
     public void update() 
     {
         if (win.visible)
-        {
             return;
-        }
-        if (input.isKeyPressed("RIGHT")) 
-        {
-            turtle.moveBy(2, 0);
-            turtle.setAngle(0);
-        }
-        if (input.isKeyPressed("LEFT")) 
-        {
-            turtle.moveBy(-2, 0);
-            turtle.setAngle(180);
-        }
-        if (input.isKeyPressed("UP")) 
-        {
-            turtle.moveBy(0, -2);
-            turtle.setAngle(270);
-        }
-        if (input.isKeyPressed("DOWN")) 
-        {
-            turtle.moveBy(0, 2);
-            turtle.setAngle(90);
-        }
+        
+        if (input.isKeyPressed("RIGHT") || input.isKeyJustPressed("D")) 
+            turtle.physics.accelerateAtAngle(0);
+        
+        if (input.isKeyPressed("LEFT")|| input.isKeyJustPressed("A")) 
+            turtle.physics.accelerateAtAngle(180);
+        
+        if (input.isKeyPressed("UP")|| input.isKeyJustPressed("W")) 
+            turtle.physics.accelerateAtAngle(270);
+        
+        if (input.isKeyPressed("DOWN")|| input.isKeyJustPressed("S")) 
+            turtle.physics.accelerateAtAngle(90);
+        
+        if(turtle.physics.getSpeed() > 0)
+            turtle.setAngle(turtle.physics.getMotionAngle());
         
         if(turtle.position.x < shark.position.x)
-        {
             shark.mirrored = true;
-        }
+        
         if(turtle.position.x > shark.position.x)
-        {
             shark.mirrored = false;
-        }
 
         for(Entity entity : starfishGroup.getList())
         {
@@ -146,9 +131,7 @@ public class StarfishCollector extends Game
         }
         
         if (starfishGroup.size() == 0) 
-        {
             win.visible = true;
-        }
 
         turtle.boundToScreen(800, 600);
     }

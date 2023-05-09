@@ -46,6 +46,8 @@ public abstract class Game extends Application implements Screen
                 input.update();
                 //update game state
                 self.update();
+                //update entity phsyics
+                self.group.update(1/60.0);
                 
                 //clear canvas
                 self.context.setFill(Color.GRAY);

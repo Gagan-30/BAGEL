@@ -84,6 +84,6 @@ public class Physics
         position.addValues(velocity.x * dt,
                            velocity.y * dt);
         
-        acceleration.s
+        acceleration.setValues(0, 0);
     }
 }
