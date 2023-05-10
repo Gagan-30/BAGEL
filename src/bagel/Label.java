@@ -35,7 +35,7 @@ public class Label extends Entity
         this.visible = true;
     }
 
-    public void setPositon(double x, double y)
+    public void setPosition(double x, double y)
     {
         position.setValues(x, y);
     }

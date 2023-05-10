@@ -1,16 +1,18 @@
 package bagel;
 
+import javafx.scene.paint.Color;
+
 public class StarfishCollector extends Game 
 {
 
     Sprite water;
-    Sprite water2;
     Group starfishGroup;
     Sprite turtle;
-    Sprite win;
     Group rockGroup;
     Sprite shark;
     Sprite fish;
+    Label starfishLabel;
+    Label winLabel;
     
     @Override
     public void initialize()
@@ -88,18 +90,32 @@ public class StarfishCollector extends Game
         fish.setAnimation(fishAnim);
         group.add(fish);
        
-        win = new Sprite();
-        win.setPosition(400,300);
-        win.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/youWin.png"));
-        win.visible = false;
-        group.add(win);
+        
+        
+        starfishLabel = new Label("Comic Sans MS", 48);
+        String text = "Starfish left: " + starfishGroup.size();
+        starfishLabel.setText(text);
+        starfishLabel.setPosition(780, 580);
+        starfishLabel.alignment = "RIGHT";
+        starfishLabel.fontColor = Color.YELLOW;
+        starfishLabel.setBorder(2, Color.BLACK);
+        group.add(starfishLabel);
+        
+        winLabel = new Label("Comic Sans MS", 80);
+        winLabel.setText("You Win!");
+        winLabel.fontColor = Color.GREEN;
+        winLabel.setBorder(2, Color.BLACK);
+        winLabel.setPosition(400, 300);
+        winLabel.alignment = "CENTER";
+        winLabel.visible = false;
+        group.add(winLabel);
                
     }
 
     @Override
     public void update() 
     {
-        if (win.visible)
+        if (winLabel.visible)
             return;
         
         if (input.isKeyPressed("RIGHT")) 
@@ -129,6 +145,8 @@ public class StarfishCollector extends Game
             if (turtle.overlaps(starfish)) 
             {
                 starfishGroup.remove(starfish);
+                String text = "Starfish left: " + starfishGroup.size();
+                starfishLabel.setText(text);
             }
         }
         
@@ -140,7 +158,7 @@ public class StarfishCollector extends Game
         
         if (starfishGroup.size() == 0) 
         {
-            win.visible = true;
+            winLabel.visible = true;
             fish.animation.paused = true;
         }
 
