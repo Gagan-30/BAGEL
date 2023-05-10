@@ -10,6 +10,7 @@ public class Animation
     public double frameDuration;
     public boolean loop;
     public double elapsedTime;
+    public boolean paused;
     
     public Animation()
     {
@@ -17,6 +18,7 @@ public class Animation
         frameDuration = 2;
         loop = false;
         elapsedTime = 0;
+        paused = false;
     }
     
     public Animation(String imageFileName, 
@@ -46,6 +48,7 @@ public class Animation
         this.frameDuration = frameDuration;
         this.loop = loop;
         this.elapsedTime = 0;
+        this.paused = false;
     }
     
     public Texture getCurrentTexture()
@@ -60,9 +63,13 @@ public class Animation
     
     public void update(double dt)
     {
+        if(paused)
+            return;
+                    
         elapsedTime += dt;
         
         if(loop && (elapsedTime > frameDuration * textureList.size()))
             elapsedTime = 0;
+        
     }
 }

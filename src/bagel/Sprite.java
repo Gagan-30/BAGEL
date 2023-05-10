@@ -16,7 +16,8 @@ public class Sprite extends Entity
     public double opacity;
     
     public Physics physics;
-
+    public Animation animation;
+    
     public Sprite()
     {
         position = new Vector();
@@ -28,6 +29,7 @@ public class Sprite extends Entity
         flipped = false;
         opacity = 1;
         physics = null;
+        animation = null;
     }
     
     public void setPosition(double x, double y)
@@ -85,6 +87,14 @@ public class Sprite extends Entity
         physics = phys;
     }
     
+    public void setAnimation(Animation anim)
+    {
+        animation = anim;
+        width = anim.getCurrentTexture().region.width;
+        height = anim.getCurrentTexture().region.height;
+        boundary.setSize(width, height);
+    }
+    
     public Rectangle getBoundary()
     {
         boundary.setPosition(position.x, position.y);
@@ -127,6 +137,12 @@ public class Sprite extends Entity
             physics.update(dt);
             this.position.setValues(
                     physics.position.x, physics.position.y);
+        }
+        
+        if(animation != null)
+        {
+            animation.update(dt);
+            texture = animation.getCurrentTexture();
         }
     }
     

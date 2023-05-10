@@ -10,6 +10,7 @@ public class StarfishCollector extends Game
     Sprite win;
     Group rockGroup;
     Sprite shark;
+    Sprite fish;
     
     @Override
     public void initialize()
@@ -79,6 +80,13 @@ public class StarfishCollector extends Game
         shark.setPosition(400, 300);
         shark.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/shark.png"));
         group.add(shark);
+        
+        fish = new Sprite();
+        fish.setPosition(100, 400);
+        Animation fishAnim = new Animation("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/fish.png",
+                                            8, 1, 0.1, true);
+        fish.setAnimation(fishAnim);
+        group.add(fish);
        
         win = new Sprite();
         win.setPosition(400,300);
@@ -131,7 +139,10 @@ public class StarfishCollector extends Game
         }
         
         if (starfishGroup.size() == 0) 
+        {
             win.visible = true;
+            fish.animation.paused = true;
+        }
 
         turtle.boundToScreen(800, 600);
     }
