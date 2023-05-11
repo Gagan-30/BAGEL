@@ -1,5 +1,6 @@
 package bagel;
 
+import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Sprite extends Entity 
@@ -17,6 +18,7 @@ public class Sprite extends Entity
     
     public Physics physics;
     public Animation animation;
+    public ArrayList<Action> actionList;
     
     public Sprite()
     {
@@ -30,6 +32,7 @@ public class Sprite extends Entity
         opacity = 1;
         physics = null;
         animation = null;
+        actionList = new ArrayList<Action>();
     }
     
     public void setPosition(double x, double y)
@@ -95,6 +98,11 @@ public class Sprite extends Entity
         boundary.setSize(width, height);
     }
     
+    public void addAction(Action a)
+    {
+        actionList.add(a);
+    }
+    
     public Rectangle getBoundary()
     {
         boundary.setPosition(position.x, position.y);
@@ -143,6 +151,14 @@ public class Sprite extends Entity
         {
             animation.update(dt);
             texture = animation.getCurrentTexture();
+        }
+        
+        ArrayList<Action> actionListCopy = new ArrayList<Action>(actionList);
+        for (Action a : actionListCopy)
+        {
+            boolean finished = a.apply(this, dt);
+            if (finished)
+                actionList.remove(a);
         }
     }
     

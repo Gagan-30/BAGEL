@@ -13,6 +13,7 @@ public class StarfishCollector extends Game
     Sprite fish;
     Label starfishLabel;
     Label winLabel;
+     
     
     @Override
     public void initialize()
@@ -67,6 +68,9 @@ public class StarfishCollector extends Game
                 }
             } 
             while (rockOverlap);
+            
+            starfish.addAction(Action.rotateBy(360, 4));
+            starfish.addAction(Action.moveBy(50, 0, 2));
             
             starfishGroup.add(starfish);
         }
