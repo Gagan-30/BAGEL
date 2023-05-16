@@ -5,9 +5,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class Label extends Entity
-{
-    
+public class Label extends Entity {
+
     public String fontName;
     public int fontSize;
     public Font font;
@@ -20,8 +19,7 @@ public class Label extends Entity
     public int borderSize;
     public boolean visible;
 
-    public Label(String fontName, int fontSize)
-    {
+    public Label(String fontName, int fontSize) {
         this.fontName = fontName;
         this.fontSize = fontSize;
         this.font = new Font(fontName, fontSize);
@@ -35,45 +33,42 @@ public class Label extends Entity
         this.visible = true;
     }
 
-    public void setPosition(double x, double y)
-    {
+    public void setPosition(double x, double y) {
         position.setValues(x, y);
     }
-    
-    public void setText(String t)
-    {
+
+    public void setText(String t) {
         text = t;
     }
-    
-    public void setBorder(int size, Color color)
-    {
+
+    public void setBorder(int size, Color color) {
         drawBorder = true;
         borderSize = size;
         borderColor = color;
     }
-    
+
     @Override
-    public void draw(GraphicsContext context) 
-    {
-        if(!visible)
+    public void draw(GraphicsContext context) {
+        if (!visible) {
             return;
-        
+        }
+
         context.setFont(font);
         context.setFill(fontColor);
-        
-        if(alignment.equals("LEFT"))
+
+        if (alignment.equals("LEFT")) {
             context.setTextAlign(TextAlignment.LEFT);
-        else if (alignment.equals("CENTER"))
+        } else if (alignment.equals("CENTER")) {
             context.setTextAlign(TextAlignment.CENTER);
-        else if (alignment.equals("RIGHT"))
+        } else if (alignment.equals("RIGHT")) {
             context.setTextAlign(TextAlignment.RIGHT);
-        
-        context.setTransform(1,0, 0,1, 0,0);
+        }
+
+        context.setTransform(1, 0, 0, 1, 0, 0);
         context.setGlobalAlpha(1);
         context.fillText(text, position.x, position.y);
-        
-        if(drawBorder)
-        {
+
+        if (drawBorder) {
             context.setStroke(borderColor);
             context.setLineWidth(borderSize);
             context.strokeText(text, position.x, position.y);
@@ -81,9 +76,8 @@ public class Label extends Entity
     }
 
     @Override
-    public void update(double dt) 
-    {
-        
+    public void update(double dt) {
+
     }
-    
+
 }

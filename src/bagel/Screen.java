@@ -1,8 +1,8 @@
 package bagel;
 
-public interface Screen
-{
+public interface Screen {
+
     public void initialize();
-    
+
     public void update();
 }
