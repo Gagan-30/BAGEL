@@ -9,7 +9,6 @@ public class StarfishCollector extends Game {
     Sprite turtle;
     Group rockGroup;
     Sprite shark;
-    Sprite fish;
     Label starfishLabel;
     Label winLabel;
 
@@ -45,6 +44,7 @@ public class StarfishCollector extends Game {
             double y = Math.random() * 450 + 100;
             starfish.setPosition(x, y);
             starfish.setTexture(starfishTexture);
+            starfish.setAngle(Math.random() * 360);
 
             boolean rockOverlap = false;
             do {
@@ -60,8 +60,9 @@ public class StarfishCollector extends Game {
                 }
             } while (rockOverlap);
 
-            starfish.addAction(Action.repeat(Action.sequence(Action.moveBy(50, 0, 2), Action.moveBy(-50, 0, 2)), 3));
-
+            starfish.addAction(Action.forever(Action.rotateBy(360, Math.random() + 2)));
+            starfish.data = false;
+            
             starfishGroup.add(starfish);
         }
         group.add(starfishGroup);
@@ -78,16 +79,21 @@ public class StarfishCollector extends Game {
         shark.setTexture(new Texture("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/shark.png"));
         group.add(shark);
 
-        fish = new Sprite();
-        fish.setPosition(100, 400);
-        Animation fishAnim = new Animation("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/fish.png",8, 1, 0.1, true);
-        fish.setAnimation(fishAnim);
-        fish.setPhysics(new Physics (0,200,0));
-        fish.physics.setSpeed(200);
-        fish.physics.setMotionAngle(45);
-        fish.setAngle(45);
-        fish.addAction(Action.wrapToScreen(800, 600));
-        group.add(fish);
+        int fishCount = 6;
+        for (int i = 0; i < fishCount; i++) {
+            Sprite fish = new Sprite();
+            fish.setPosition(Math.random() * 800, Math.random() * 600);
+            Animation fishAnim = new Animation("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/fish.png", 8, 1, 0.1, true);
+            fish.setAnimation(fishAnim.clone());
+            fish.setPhysics(new Physics(0, 200, 0));
+            double speed = Math.random() * 100 + 100;
+            fish.physics.setSpeed(speed);
+            double angle = Math.random() * 260;
+            fish.physics.setMotionAngle(angle);
+            fish.setAngle(angle);
+            fish.addAction(Action.wrapToScreen(800, 600));
+            group.add(fish);
+        }
 
         starfishLabel = new Label("Comic Sans MS", 48);
         String text = "Starfish left: " + starfishGroup.size();
@@ -145,10 +151,16 @@ public class StarfishCollector extends Game {
 
         for (Entity entity : starfishGroup.getList()) {
             Sprite starfish = (Sprite) entity;
-            if (turtle.overlaps(starfish)) {
-                starfishGroup.remove(starfish);
+            if (turtle.overlaps(starfish) && (boolean)starfish.data == false) {
+                starfish.actionList.clear();
+                starfish.addAction(Action.fadeOut(1));
+                starfish.data = true;
                 String text = "Starfish left: " + starfishGroup.size();
                 starfishLabel.setText(text);
+            }
+            
+            if(starfish.actionList.isEmpty()){
+                starfishGroup.remove(starfish);
             }
         }
 
@@ -159,7 +171,6 @@ public class StarfishCollector extends Game {
 
         if (starfishGroup.size() == 0) {
             winLabel.visible = true;
-            fish.animation.paused = true;
         }
 
     }

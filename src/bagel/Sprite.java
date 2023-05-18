@@ -15,10 +15,10 @@ public class Sprite extends Entity {
     public boolean mirrored; //x direction
     public boolean flipped; //y direction
     public double opacity;
-
     public Physics physics;
     public Animation animation;
     public ArrayList<Action> actionList;
+    public Object data;
 
     public Sprite() {
         position = new Vector();

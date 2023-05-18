@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 public class Animation {
 
     public ArrayList<Texture> textureList;
-
     public double frameDuration;
     public boolean loop;
     public double elapsedTime;
@@ -55,6 +54,14 @@ public class Animation {
         }
 
         return textureList.get(textureIndex);
+    }
+
+    public Animation clone() {
+        Animation a = new Animation();
+        a.textureList = this.textureList;
+        a.frameDuration = this.frameDuration;
+        a.loop = this.loop;
+        return a;
     }
 
     public void update(double dt) {
