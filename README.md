@@ -9,3 +9,9 @@ This project includes the basic game development features:
 Game loop, animations, Display output, Vectors, Sprites, Textures, Keyboard inputs, Basic collision detection, Sprite reflection, Sprite opacity, Basic physics functions such as:
 
 Speed, velocity, Acceleration through the use of Vectors and Delta Time
+
+Game 1: Starfish collector
+
+Game 2: Asteroids
+
+Game 3: Plane Dodger
