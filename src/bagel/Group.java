@@ -3,51 +3,78 @@ package bagel;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Group extends Entity
-{
+/**
+ * A collection of {@link Entity} objects.
+ *
+ */
+public class Group extends Entity {
+
+    /**
+     * The collection underlying this list.
+     */
     private ArrayList<Entity> list;
-    
-    public Group()
-    {
-        list = new ArrayList<Entity>();
-    }
-    
-    public void add(Entity e)
-    {
-        list.add(e);
-    }
-    
-    public void remove(Entity e)
-    {
-        list.remove(e);
-    }
-    
-    public ArrayList<Entity> getList()
-    {
-        return new ArrayList<Entity>(list);
-    }
-    
-    public int size()
-    {
-        return list.size();
+
+    /**
+     * Initialize this object.
+     */
+    public Group() {
+        this.list = new ArrayList<Entity>();
     }
 
-    @Override
-    public void draw(GraphicsContext context) 
-    {
-        for(Entity e : list)
-        {
+    /**
+     * Add an {@link Entity} to this collection.
+     *
+     * @param e The Entity being added to this collection.
+     */
+    public void add(Entity e) {
+        this.list.add(e);
+    }
+
+    /**
+     * Remove an {@link Entity} from this collection.
+     *
+     * @param e The Entity being removed from this collection.
+     */
+    public void remove(Entity e) {
+        this.list.remove(e);
+    }
+
+    /**
+     * Retrieve a (shallow) copy of this list. Especially useful in for loops.
+     * Avoids concurrent modification exceptions when adding/removing from this
+     * collection during iteration.
+     *
+     * @return a copy of the list underlying this collection
+     */
+    public ArrayList<Entity> getList() {
+        return new ArrayList<Entity>(list);
+    }
+
+    /**
+     * Determine the number of entities in this collection.
+     *
+     * @return the size of this collection
+     */
+    public int size() {
+        return this.list.size();
+    }
+
+    /**
+     * Render all Entity objects in this collection to a canvas.
+     */
+    public void draw(GraphicsContext context) {
+        for (Entity e : this.list) {
             e.draw(context);
         }
     }
-    
-    public void update(double dt)
-    {
-        for(Entity e : this.list)
-        {
+
+    /**
+     * Update all Entity objects in this collection.
+     */
+    public void update(double dt) {
+        for (Entity e : this.list) {
             e.update(dt);
         }
     }
-    
-    
+
 }

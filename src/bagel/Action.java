@@ -46,25 +46,28 @@ public class Action {
 
     public static Action rotateBy(double deltaA, double duration) {
         return new Action(
-                (Sprite target, double dt, double tt) -> {
-                    target.rotateBy(deltaA / duration * dt);
-                    return (tt >= duration);
-                }
+                (Sprite target, double dt, double tt)
+                -> {
+            target.rotateBy(deltaA / duration * dt);
+            return (tt >= duration);
+        }
         );
     }
 
     public static Action fadeOut(double duration) {
         return new Action(
-                (Sprite target, double dt, double tt) -> {
-                    target.opacity -= (1 / duration * dt);
-                    if (target.opacity < 0) {
-                        target.opacity = 0;
-                    }
-                    return (tt >= duration);
-                }
+                (Sprite target, double dt, double tt)
+                -> {
+            target.opacity -= (1 / duration * dt);
+            if (target.opacity < 0) {
+                target.opacity = 0;
+            }
+            return (tt >= duration);
+        }
         );
     }
 
+    // meta-actions
     public static Action repeat(Action action, int totalTimes) {
         return new Action() {
             int finishedTimes = 0;
@@ -73,7 +76,7 @@ public class Action {
             public boolean apply(Sprite target, double dt) {
                 boolean finished = action.apply(target, dt);
                 if (finished) {
-                    finishedTimes++;
+                    finishedTimes += 1;
                     action.reset();
                 }
                 return (finishedTimes == totalTimes);
@@ -86,9 +89,11 @@ public class Action {
             @Override
             public boolean apply(Sprite target, double dt) {
                 boolean finished = action.apply(target, dt);
+
                 if (finished) {
                     action.reset();
                 }
+
                 return false;
             }
         };
@@ -96,7 +101,8 @@ public class Action {
 
     public static Action sequence(Action... actions) {
         return new Action() {
-            ArrayList<Action> actionList = new ArrayList<Action>(Arrays.asList(actions));
+            ArrayList<Action> actionList
+                    = new ArrayList<Action>(Arrays.asList(actions));
             int currentIndex;
 
             @Override
@@ -104,7 +110,7 @@ public class Action {
                 Action currentAction = actionList.get(currentIndex);
                 boolean finished = currentAction.apply(target, dt);
                 if (finished) {
-                    currentIndex++;
+                    currentIndex += 1;
                 }
                 return (currentIndex == actionList.size());
             }
@@ -114,29 +120,41 @@ public class Action {
                 for (Action action : actionList) {
                     action.reset();
                 }
+
                 currentIndex = 0;
             }
         };
     }
 
     public static Action delay(double duration) {
-        return new Action((Sprite target, double dt, double tt) -> {
+        return new Action(
+                (Sprite target, double dt, double tt)
+                -> {
             return (tt >= duration);
-        });
+        }
+        );
     }
 
-    public static Action boundToScreen(int screenWidth, int screenHeight) {
-        return new Action((Sprite target, double dt, double tt) -> {
+    // screen-based actions
+    public static Action boundToScreen(
+            int screenWidth, int screenHeight) {
+        return new Action(
+                (Sprite target, double dt, double tt)
+                -> {
             target.boundToScreen(screenWidth, screenHeight);
             return false;
-        });
+        }
+        );
     }
 
-    public static Action wrapToScreen(int screenWidth, int screenHeight) {
-        return new Action((Sprite target, double dt, double tt) -> {
+    public static Action wrapToScreen(
+            int screenWidth, int screenHeight) {
+        return new Action(
+                (Sprite target, double dt, double tt)
+                -> {
             target.wrapToScreen(screenWidth, screenHeight);
             return false;
-        });
+        }
+        );
     }
-
 }

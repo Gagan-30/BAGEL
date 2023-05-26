@@ -7,16 +7,60 @@ import javafx.scene.text.TextAlignment;
 
 public class Label extends Entity {
 
-    public String fontName;
+    /**
+     * Name of the font.
+     */
+    String fontName;
+
+    /**
+     * Size of the font.
+     */
     public int fontSize;
-    public Font font;
+
+    /**
+     * Automatically set by constructor.
+     */
+    Font font;
+
+    /**
+     * color used to draw font
+     */
     public Color fontColor;
+
+    /**
+     * text to display in label
+     */
     public String text;
+
+    /**
+     * position of anchor of label; see {@link #setPosition(double, double)}
+     */
     public Vector position;
+
+    /**
+     * text alignment ("LEFT", "CENTER", "RIGHT") with respect to anchor point
+     * (x,y)
+     */
     public String alignment;
+
+    /**
+     * determines if font border will be drawn
+     */
     public boolean drawBorder;
-    public Color borderColor;
+
+    /**
+     * size of font border
+     */
     public int borderSize;
+
+    /**
+     * colour used to draw font border
+     */
+    public Color borderColor;
+
+    /**
+     * determines if label will be visible
+     */
     public boolean visible;
 
     public Label(String fontName, int fontSize) {
@@ -33,6 +77,14 @@ public class Label extends Entity {
         this.visible = true;
     }
 
+    /**
+     * Set the coordinates of the anchor position of this label; this may be to
+     * the left, center, or right of the text according to the value of
+     * {@link #alignment}.
+     *
+     * @param x x-coordinate of anchor of label
+     * @param y y-coordinate of anchor of label
+     */
     public void setPosition(double x, double y) {
         position.setValues(x, y);
     }
@@ -47,7 +99,6 @@ public class Label extends Entity {
         borderColor = color;
     }
 
-    @Override
     public void draw(GraphicsContext context) {
         if (!visible) {
             return;
@@ -75,9 +126,7 @@ public class Label extends Entity {
         }
     }
 
-    @Override
     public void update(double dt) {
-
+        // empty method
     }
-
 }

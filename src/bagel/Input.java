@@ -1,81 +1,113 @@
 package bagel;
 
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import java.util.ArrayList;
 
-public class Input 
-{
+/**
+ * A structure for storing and updating keyboard state: which keys are currently
+ * pressed or just pressed/released.
+ */
+public class Input {
+
     public ArrayList<String> justPressedQueue;
     public ArrayList<String> justReleasedQueue;
-    
     public ArrayList<String> justPressedList;
     public ArrayList<String> stillPressedList;
     public ArrayList<String> justReleasedList;
-    
-    public Input(Scene listeningScene)
-    {
+
+    /**
+     * Initialize object and activate event listeners.
+     *
+     * @param listeningScene the window Scene that has focus during the game
+     */
+    public Input(Scene listeningScene) {
         justPressedQueue = new ArrayList<String>();
         justReleasedQueue = new ArrayList<String>();
         justPressedList = new ArrayList<String>();
         stillPressedList = new ArrayList<String>();
         justReleasedList = new ArrayList<String>();
-        
-        listeningScene.setOnKeyPressed((KeyEvent event) ->
-            {
-                String keyName = event.getCode().toString();
-                justPressedQueue.add(keyName);
-            }
+
+        // Example Strings: UP, LEFT, Q, DIGIT1, SPACE, SHIFT
+        listeningScene.setOnKeyPressed(
+                (KeyEvent event)
+                -> {
+            String keyName = event.getCode().toString();
+            justPressedQueue.add(keyName);
+        }
         );
-        
-        listeningScene.setOnKeyReleased((KeyEvent event) ->
-            {
-                String keyName = event.getCode().toString();
-                justReleasedQueue.add(keyName);
-            }
+
+        listeningScene.setOnKeyReleased(
+                (KeyEvent event)
+                -> {
+            String keyName = event.getCode().toString();
+            justReleasedQueue.add(keyName);
+        }
         );
-        
     }
-    
-    public void update()
-    {
-        //clear data from previous discrete event
+
+    /**
+     * Update input state information. Automatically called by {@link Game}
+     * class during the game loop.
+     */
+    public void update() {
+        // clear previous discrete event status
         justPressedList.clear();
         justReleasedList.clear();
-        
-        //update current events based on data from queues
-        for (String keyName : justPressedQueue)
-        {
-            if(!stillPressedList.contains(keyName))
-            {
+
+        // update current event status
+        for (String keyName : justPressedQueue) {
+            // avoid multiple keypress events while holding key
+            // avoid duplicate entries in key pressed list
+            if (!stillPressedList.contains(keyName)) {
                 justPressedList.add(keyName);
                 stillPressedList.add(keyName);
             }
         }
-        
-        for (String keyName :justReleasedQueue)
-        {
+
+        for (String keyName : justReleasedQueue) {
             stillPressedList.remove(keyName);
             justReleasedList.add(keyName);
         }
-        
-        //clear queues
+
+        // clear the queues used to store events
         justPressedQueue.clear();
         justReleasedQueue.clear();
     }
-    
-    public boolean isKeyJustPressed(String keyName)
-    {
+
+    /**
+     * Determine if key has been pressed / moved to down position (a discrete
+     * action).
+     *
+     * @param keyName name of corresponding key (examples: "LEFT", "A",
+     * "DIGIT1", "SPACE", "SHIFT")
+     * @return true if key was just pressed
+     */
+    public boolean isKeyJustPressed(String keyName) {
         return justPressedList.contains(keyName);
     }
-    
-    public boolean isKeyPressed(String keyName)
-    {
+
+    /**
+     * Determine if key is currently being pressed / held down (a continuous
+     * action).
+     *
+     * @param keyName name of corresponding key (examples: "LEFT", "A",
+     * "DIGIT1", "SPACE", "SHIFT")
+     * @return true if key is currently pressed
+     */
+    public boolean isKeyPressed(String keyName) {
         return stillPressedList.contains(keyName);
     }
-    
-    public boolean isKeyJustReleased(String keyName)
-    {
+
+    /**
+     * Determine if key has been released / returned to up position (a discrete
+     * action).
+     *
+     * @param keyName name of corresponding key (examples: "LEFT", "A",
+     * "DIGIT1", "SPACE", "SHIFT")
+     * @return true if key was just released
+     */
+    public boolean isKeyJustReleased(String keyName) {
         return justReleasedList.contains(keyName);
     }
 }

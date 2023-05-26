@@ -14,60 +14,70 @@ public class TestJavaFX extends Application
 {
     public double x;
     public double y;
-    
-    @Override
-    public void start(Stage primaryStage)
+
+    public void start(Stage mainStage)
     {
-        primaryStage.setTitle("My JavaFX Application");
-        
+        // set text that appears in window title bar
+        mainStage.setTitle("My JavaFX Application");
+
+        // a Pane is a layout manager
         Pane root = new Pane();
-        
-        Scene scene = new Scene(root, 800, 600);
-        
-        primaryStage.setScene(scene);
-        
+
+        // Scene contains content within Stage/Window
+        // parameters: layout manager, width, height
+        Scene mainScene = new Scene( root, 800, 600 );
+        // attach scene to stage
+        mainStage.setScene( mainScene );
+
+        // add a canvas to the window
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext context = canvas.getGraphicsContext2D();
-        
-        Image ball = new Image("C:\\Users\\gghat\\Documents\\NetBeansProjects\\Bagel\\images\\basketball.png",
+
+        Image ball = new Image("C:/Users/gghat/Documents/NetBeansProjects/Bagel/src/images/basketball.png",
                 100, 100, true, true);
-        
+
         x = 10;
         y = 10;
-        
-        root.getChildren().add(canvas);
-        
+
+        // must add canvas to scene graph
+        root.getChildren().add( canvas );
+
+        // the code in the handle method runs
+        //   approximately 60 times / second
         AnimationTimer timer = new AnimationTimer()
         {
-            @Override
-            public void handle(long nanoTime) 
+            public void handle(long nanoTime)
             {
-                //clear canvas
-                context.setFill(Color.WHITE); // background color
+                // clear the canvas
+                context.setFill( Color.ALICEBLUE );
                 context.fillRect(0,0, 800,600);
-                
+
+                // move the image across the canvas
                 x += 2;
                 y += 1;
-                context.drawImage(ball, x, y);
+                context.drawImage( ball, x, y );
             }
-            
         };
-        
+
+        // don't forget to start the timer!
         timer.start();
-        primaryStage.show();
+
+        // make the window visible
+        mainStage.show();
     }
-    
+
+    // driver method
     public static void main(String[] args)
     {
-        try 
+        try
         {
             launch(args);
-        } 
-        catch (Exception e) 
-        {
-           e.printStackTrace();
         }
-        finally 
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
         {
             System.exit(0);
         }
